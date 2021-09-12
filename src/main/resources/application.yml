@@ -1,0 +1,17 @@
+datasource:
+  db-cooperation:
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: "${AGREEMENT_DATASOURCE_URL}"
+      username: "${AGREEMENT_DATASOURCE_USERNAME}"
+      password: "${AGREEMENT_DATASOURCE_PASSWORD}"
+      connection-timeout: 60000
+      maximum-pool-size: 5
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db.changelog-master.xml
+    drop-first: false
+server:
+  port: 8081
+
