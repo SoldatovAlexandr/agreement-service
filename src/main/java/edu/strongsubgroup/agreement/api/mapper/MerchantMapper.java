@@ -13,6 +13,7 @@ public class MerchantMapper {
                 .guid(merchant.getGuid())
                 .phoneNumber(merchant.getPhoneNumber())
                 .isActive(merchant.isActive())
+                .createdAt(merchant.getCreatedAt())
                 .build();
     }
 

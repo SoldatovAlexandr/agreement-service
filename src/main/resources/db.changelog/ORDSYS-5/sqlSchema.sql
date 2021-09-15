@@ -17,6 +17,7 @@ create table if not exists merchant
     name         varchar(64)                                          not null,
     guid         varchar(20)                                          not null unique,
     phone_number varchar(10)                                          not null,
+    created_at   timestamp                                            not null,
     is_active    bool                                                 not null
 );
 --rollback drop table merchant;

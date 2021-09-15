@@ -1,10 +1,12 @@
 package edu.strongsubgroup.agreement.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -31,6 +33,8 @@ public class MerchantDto {
     @Size(max = 10, message = "required.value.error")
     private String phoneNumber;
 
-    @NotBlank(message = "required.value.error")
     private boolean isActive;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime createdAt;
 }

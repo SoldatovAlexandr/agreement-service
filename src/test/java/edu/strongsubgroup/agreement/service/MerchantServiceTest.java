@@ -14,12 +14,14 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MerchantServiceTest {
 
     private final MerchantRepository merchantRepository = Mockito.mock(MerchantRepository.class);
+    private final DateTimeUtils dateTimeUtils = Mockito.mock(DateTimeUtils.class);
     private final MerchantMapper merchantMapper = new MerchantMapper();
 
     private Merchant merchant;
@@ -30,7 +32,7 @@ public class MerchantServiceTest {
 
     @BeforeEach
     void setUp() {
-        merchantService = new MerchantServiceImpl(merchantRepository, merchantMapper);
+        merchantService = new MerchantServiceImpl(merchantRepository, merchantMapper, dateTimeUtils);
 
         merchant = Merchant.builder()
                 .id(1L)
@@ -75,7 +77,8 @@ public class MerchantServiceTest {
 
         MerchantDto resultDto = merchantService.add(merchantDto);
 
-        verify(merchantRepository).save(merchant);
+        verify(dateTimeUtils).now();
+        verify(merchantRepository).save(any());
         assertEquals(merchantDto, resultDto);
     }
 
