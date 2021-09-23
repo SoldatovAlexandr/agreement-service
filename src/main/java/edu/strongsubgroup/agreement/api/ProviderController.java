@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,10 +49,10 @@ public class ProviderController {
         return providerService.update(providerDto, id);
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(final @PathVariable Long id) {
+    public void delete(final @PathVariable Long id) {
         log.info("Delete provider by id [{}]", id);
         providerService.delete(id);
-        return ResponseEntity.ok(Optional.empty());
     }
 }
