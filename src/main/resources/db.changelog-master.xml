@@ -5,6 +5,6 @@
 
     <include file="classpath:/db.changelog/ORDSYS-5/sqlSchema.sql"/>
     <include file="classpath:/db.changelog/ORDSYS-6/sqlSchema.sql"/>
-    <include file="classpath:/db.changelog/ORDSYS-7/sqlSchema.sql"/>
     <include file="classpath:/db.changelog/ORDSYS-10/sqlSchema.sql"/>
+    <include file="classpath:/db.changelog/ORDSYS-7/sqlSchema.sql"/>
 </databaseChangeLog>

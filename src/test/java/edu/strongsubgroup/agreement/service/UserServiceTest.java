@@ -2,6 +2,7 @@ package edu.strongsubgroup.agreement.service;
 
 import edu.strongsubgroup.agreement.api.dto.RoleDto;
 import edu.strongsubgroup.agreement.api.dto.UserDto;
+import edu.strongsubgroup.agreement.api.mapper.RoleMapper;
 import edu.strongsubgroup.agreement.api.mapper.UserMapper;
 import edu.strongsubgroup.agreement.common.UserRoles;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
@@ -26,7 +27,8 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final RoleRepository roleRepository = Mockito.mock(RoleRepository.class);
-    private final UserMapper userMapper = new UserMapper();
+    private final RoleMapper roleMapper = new RoleMapper();
+    private final UserMapper userMapper = new UserMapper(roleMapper);
 
     private User user;
 

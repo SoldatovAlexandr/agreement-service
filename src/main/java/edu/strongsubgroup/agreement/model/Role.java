@@ -13,16 +13,10 @@ import javax.persistence.*;
 @Builder
 
 @Entity
-@Table(name = "users")
+@Table(name = "roles")
 public class Role extends AbstractEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", unique = true, nullable = false)
     private UserRoles name;
-
-    @Builder
-    public Role(Long id, UserRoles name) {
-        setId(id);
-        this.name = name;
-    }
 }

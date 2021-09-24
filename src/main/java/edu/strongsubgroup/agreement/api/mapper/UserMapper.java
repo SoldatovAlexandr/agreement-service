@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
+    private final RoleMapper roleMapper;
+
     public User to(UserDto userDto) {
         return User.builder()
                 .login(userDto.getLogin())
@@ -20,7 +22,7 @@ public class UserMapper {
         return UserDto.builder()
                 .id(user.getId())
                 .login(user.getLogin())
-                .roles(new RoleMapper().fromSet(user.getRoles()))
+                .roles(roleMapper.fromSet(user.getRoles()))
                 .build();
     }
 }
