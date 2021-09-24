@@ -64,7 +64,7 @@ public class AgreementServiceImpl implements AgreementService {
                 .provider(provider)
                 .build();
 
-        changeStatus(agreement, AgreementStatus.DEFAULT, "A new agreement has been created.");
+        changeStatus(agreement, AgreementStatus.DRAFT, "A new agreement has been created.");
         return agreementMapper.to(agreement);
     }
 

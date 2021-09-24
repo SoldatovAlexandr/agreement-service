@@ -58,7 +58,7 @@ public class AgreementServiceTest {
         agreement = Agreement.builder()
                 .description("Some description")
                 .createdAt(createdAt)
-                .status(AgreementStatus.DEFAULT)
+                .status(AgreementStatus.DRAFT)
                 .merchant(Merchant.builder().id(2L).build())
                 .provider(Provider.builder().id(3L).build())
                 .build();
@@ -70,7 +70,7 @@ public class AgreementServiceTest {
                 .merchantId(2L)
                 .providerId(3L)
                 .description("Some description")
-                .status(AgreementStatus.DEFAULT)
+                .status(AgreementStatus.DRAFT)
                 .createdAt(createdAt)
                 .build();
     }
@@ -109,10 +109,10 @@ public class AgreementServiceTest {
         verify(dateTimeUtils, times(2)).now();
         verify(agreementRepository, times(1)).save(any());
         verify(agreementHistoryRepository, times(1)).save(historyArgumentCaptor.capture());
-        assertEquals(AgreementStatus.DEFAULT, result.getStatus());
+        assertEquals(AgreementStatus.DRAFT, result.getStatus());
         AgreementHistory history = historyArgumentCaptor.getValue();
         assertEquals("A new agreement has been created.", history.getDescription());
-        assertEquals(AgreementStatus.DEFAULT, history.getStatus());
+        assertEquals(AgreementStatus.DRAFT, history.getStatus());
         assertEquals(createdAt, history.getCreatedAt());
     }
 
@@ -223,7 +223,7 @@ public class AgreementServiceTest {
         List<AgreementHistory> histories = List.of(AgreementHistory.builder()
                 .description("some description")
                 .agreement(agreement)
-                .status(AgreementStatus.DEFAULT)
+                .status(AgreementStatus.DRAFT)
                 .createdAt(createdAt)
                 .build());
 
@@ -237,7 +237,7 @@ public class AgreementServiceTest {
         assertEquals("some description", result.get(0).getDescription());
         assertEquals(1L, result.get(0).getAgreementId());
         assertEquals(createdAt, result.get(0).getCreatedAt());
-        assertEquals(AgreementStatus.DEFAULT, result.get(0).getStatus());
+        assertEquals(AgreementStatus.DRAFT, result.get(0).getStatus());
     }
 
     @Test

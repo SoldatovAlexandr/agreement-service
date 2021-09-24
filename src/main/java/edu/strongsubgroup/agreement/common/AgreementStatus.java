@@ -1,7 +1,7 @@
 package edu.strongsubgroup.agreement.common;
 
 public enum AgreementStatus {
-    DEFAULT,
+    DRAFT,
     CONSIDERED,
     APPROVED,
     REJECTED,
