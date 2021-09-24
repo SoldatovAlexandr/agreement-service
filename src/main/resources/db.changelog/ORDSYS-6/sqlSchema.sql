@@ -24,3 +24,7 @@ create table if not exists merchant_provider
 );
 --rollback drop table merchant_provider;
 --comment: Создана таблица merchant_provider
+
+--changeset asoldatov:provider3
+drop table if exists merchant_provider;
+--comment: Удалена таблица merchant_provider

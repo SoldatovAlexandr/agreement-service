@@ -4,8 +4,10 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -32,8 +34,12 @@ public class Provider extends AbstractEntity<Long> {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "provider")
+    private List<Agreement> agreements;
+
     @Builder
-    public Provider(Long id, String guid, String name, String phoneNumber, boolean isActive, LocalDateTime createdAt) {
+    public Provider(Long id, String guid, String name, String phoneNumber, boolean isActive,
+                    LocalDateTime createdAt, List<Agreement> agreements) {
         setId(id);
         this.guid = guid;
         this.name = name;
