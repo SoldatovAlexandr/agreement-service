@@ -1,9 +1,11 @@
 package edu.strongsubgroup.agreement.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.strongsubgroup.agreement.filter.CustomAuthenticationFilter;
 import edu.strongsubgroup.agreement.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -24,6 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final ObjectMapper objectMapper;
+
+    @Value("frontend.host")
+    private String frontendUrl;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,7 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter =
-                new CustomAuthenticationFilter(authenticationManagerBean());
+                new CustomAuthenticationFilter(authenticationManagerBean(), objectMapper);
+        http.cors();
         http.csrf().disable();
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.sessionManagement().sessionCreationPolicy(STATELESS);
@@ -48,4 +60,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of(frontendUrl));
+        configuration.setAllowedMethods(List.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 }
