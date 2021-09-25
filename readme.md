@@ -22,6 +22,7 @@ QUICK START
     * AGREEMENT_DATASOURCE_URL
     * AGREEMENT_DATASOURCE_USERNAME
     * AGREEMENT_DATASOURCE_PASSWORD
+    * AGREEMENT_FRONTED_URL (адресс на котором будет запускаться frontend приложение)
 
 4. Попробовать запустить проект.
 

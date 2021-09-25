@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.Set;
@@ -28,7 +29,8 @@ public class UserServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final RoleRepository roleRepository = Mockito.mock(RoleRepository.class);
     private final RoleMapper roleMapper = new RoleMapper();
-    private final UserMapper userMapper = new UserMapper(roleMapper);
+    private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
+    private final UserMapper userMapper = new UserMapper(roleMapper, passwordEncoder);
 
     private User user;
 
@@ -42,7 +44,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        userService = new UserServiceImpl(userRepository, roleRepository, userMapper);
+        userService = new UserServiceImpl(userRepository, roleRepository, userMapper, passwordEncoder);
 
         role = Role.builder()
                 .name(UserRoles.ROLE_MANAGER)

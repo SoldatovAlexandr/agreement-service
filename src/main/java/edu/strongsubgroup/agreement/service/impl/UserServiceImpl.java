@@ -13,18 +13,39 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Log4j2
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userRepository.findUserByLogin(login)
+                .orElseThrow(() -> {
+                    log.error("User with login {} not found", login);
+                    throw new UsernameNotFoundException("Пользователь не найден.");
+                });
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName().name())));
+
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), authorities);
+    }
 
     @Override
     public UserDto find(Long id) {
@@ -51,7 +72,7 @@ public class UserServiceImpl implements UserService {
     public UserDto update(UserDto userDto, Long id) {
         User user = findById(id);
         user.setLogin(userDto.getLogin());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
         return userMapper.to(user);
     }
