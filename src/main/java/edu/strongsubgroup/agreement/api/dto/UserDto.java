@@ -20,12 +20,12 @@ public class UserDto {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @NotBlank(message = "required.value.error")
-    @Size(max = 64, message = "required.value.error")
+    @Size(max = 64, message = "long.password.error")
     private String password;
 
-    @Email(message =  "required.value.error")
+    @Email(message = "required.value.error")
     @NotBlank(message = "required.value.error")
-    @Size(max = 64, message = "required.value.error")
+    @Size(max = 64, message = "long.login.error")
     private String login;
 
     private Set<RoleDto> roles;

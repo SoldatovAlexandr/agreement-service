@@ -16,8 +16,8 @@ import javax.validation.constraints.Size;
 public class RoleDto {
     private Long id;
 
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я0-9 -_]*$", message = "required.value.error")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я0-9 -_]*$", message = "incorrect.name.error")
     @NotBlank(message = "required.value.error")
-    @Size(max = 64, message = "required.value.error")
+    @Size(max = 64, message = "long.name.error")
     private String name;
 }
