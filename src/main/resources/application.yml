@@ -1,3 +1,9 @@
+logging:
+  level:
+    com.perspective.calculation: "${LOG_LEVEL:INFO}"
+    org.springframework: WARN
+  file:
+    name: target/log/application.log
 datasource:
   db-cooperation:
     hikari:
