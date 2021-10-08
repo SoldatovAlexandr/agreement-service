@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 public class AgreementApplicationConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "datasource.db-cooperation.hikari")
+    @ConfigurationProperties(prefix = "datasource.db-agreement.hikari")
     public HikariConfig hikariConfig() {
         return new HikariConfig();
     }

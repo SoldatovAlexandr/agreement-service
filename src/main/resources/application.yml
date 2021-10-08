@@ -5,7 +5,7 @@ logging:
   file:
     name: target/log/application.log
 datasource:
-  db-cooperation:
+  db-agreement:
     hikari:
       driver-class-name: org.postgresql.Driver
       jdbc-url: "${AGREEMENT_DATASOURCE_URL}"

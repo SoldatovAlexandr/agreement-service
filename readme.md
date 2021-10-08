@@ -35,3 +35,9 @@ API DOCUMENTATION
 WHAT'S NEXT
 -----------
 [Попробуй сам](http://localhost:8081/)
+
+
+DEPLOY
+------
+      java -AGREEMENT_DATASOURCE_URL="..." -jar agreement-service-1.0-SNAPSHOT.jar
+
