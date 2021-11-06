@@ -127,4 +127,38 @@ public class ProviderControllerTest {
         mockMvc.perform(delete("/api/providers/1"))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void activate_provider() throws Exception {
+        ProviderDto requestDto = ProviderDto.builder()
+                .id(1L)
+                .isActive(true)
+                .guid("provider")
+                .name("Первый провайдер")
+                .phoneNumber("9008888888")
+                .build();
+
+        ProviderDto responseDto = ProviderDto.builder()
+                .id(1L)
+                .isActive(false)
+                .guid("provider")
+                .name("Первый провайдер")
+                .createdAt(createdAt)
+                .phoneNumber("9008888888")
+                .build();
+
+        when(providerService.changeStatus(eq(1L))).thenReturn(responseDto);
+
+        mockMvc.perform(put("/api/providers/activate/1")
+                .content(objectMapper.writeValueAsString(requestDto))
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(1)))
+                .andExpect(jsonPath("active", is(false)))
+                .andExpect(jsonPath("guid", is("provider")))
+                .andExpect(jsonPath("name", is("Первый провайдер")))
+                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
+    }
+
 }

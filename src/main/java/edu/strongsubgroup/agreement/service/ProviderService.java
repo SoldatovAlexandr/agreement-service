@@ -18,4 +18,6 @@ public interface ProviderService {
     void delete(Long id);
 
     Provider findById(Long id);
+
+    ProviderDto changeStatus(Long id);
 }

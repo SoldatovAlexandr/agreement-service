@@ -128,4 +128,37 @@ public class MerchantControllerTest {
         mockMvc.perform(delete("/api/merchants/1"))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void activate_merchant() throws Exception {
+        MerchantDto requestDto = MerchantDto.builder()
+                .id(1L)
+                .isActive(true)
+                .guid("merchant")
+                .name("Первый мерчант")
+                .phoneNumber("9008888888")
+                .build();
+
+        MerchantDto responseDto = MerchantDto.builder()
+                .id(1L)
+                .isActive(false)
+                .guid("merchant")
+                .name("Первый мерчант")
+                .createdAt(createdAt)
+                .phoneNumber("9008888888")
+                .build();
+
+        when(merchantService.changeStatus(eq(1L))).thenReturn(responseDto);
+
+        mockMvc.perform(put("/api/merchants/activate/1")
+                .content(objectMapper.writeValueAsString(requestDto))
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", is(1)))
+                .andExpect(jsonPath("active", is(false)))
+                .andExpect(jsonPath("guid", is("merchant")))
+                .andExpect(jsonPath("name", is("Первый мерчант")))
+                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
+    }
 }

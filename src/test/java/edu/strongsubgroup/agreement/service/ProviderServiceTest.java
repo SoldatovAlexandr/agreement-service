@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -112,5 +113,16 @@ public class ProviderServiceTest {
 
         verify(providerRepository).findById(1L);
         verify(providerRepository).delete(provider);
+    }
+
+    @Test
+    void changeStatus() {
+        when(providerRepository.findById(1L)).thenReturn(Optional.of(provider));
+
+        ProviderDto providerDto = providerService.changeStatus(1L);
+
+        verify(providerRepository).findById(1L);
+        verify(providerRepository).save(provider);
+        assertFalse(providerDto.isActive());
     }
 }

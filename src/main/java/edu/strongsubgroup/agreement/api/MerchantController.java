@@ -56,4 +56,10 @@ public class MerchantController {
         log.info("Delete merchant by id [{}]", id);
         merchantService.delete(id);
     }
+
+    @PutMapping("/activate/{id}")
+    public MerchantDto activate(final @PathVariable Long id) {
+        log.info("Change status merchant with id [{}]", id);
+        return merchantService.changeStatus(id);
+    }
 }

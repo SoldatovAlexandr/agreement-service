@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class MerchantServiceImpl implements MerchantService {
         return merchantMapper.to(merchant);
     }
 
+    @Transactional
     @Override
     public MerchantDto update(MerchantDto merchantDto, Long id) {
         Merchant merchant = findById(id);
@@ -54,6 +56,7 @@ public class MerchantServiceImpl implements MerchantService {
         return merchantMapper.to(merchant);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         Merchant merchant = findById(id);
@@ -64,5 +67,14 @@ public class MerchantServiceImpl implements MerchantService {
     public Merchant findById(Long id) {
         return merchantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Merchant with id [%s] not found", id)));
+    }
+
+    @Transactional
+    @Override
+    public MerchantDto changeStatus(Long id) {
+        Merchant merchant = findById(id);
+        merchant.setActive(!merchant.isActive());
+        merchantRepository.save(merchant);
+        return merchantMapper.to(merchant);
     }
 }

@@ -55,4 +55,10 @@ public class ProviderController {
         log.info("Delete provider by id [{}]", id);
         providerService.delete(id);
     }
+
+    @PutMapping("/activate/{id}")
+    public ProviderDto activate(final @PathVariable Long id) {
+        log.info("Change status provider with id [{}]", id);
+        return providerService.changeStatus(id);
+    }
 }
