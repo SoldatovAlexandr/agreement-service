@@ -43,7 +43,7 @@ public class MerchantControllerTest {
                 .guid("merchant")
                 .name("Первый мерчант")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(merchantService.find(1L)).thenReturn(dto);
@@ -54,7 +54,7 @@ public class MerchantControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("merchant")))
                 .andExpect(jsonPath("name", is("Первый мерчант")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")));
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class MerchantControllerTest {
                 .isActive(true)
                 .guid("merchant")
                 .name("Первый мерчант")
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         MerchantDto responseDto = MerchantDto.builder()
@@ -73,7 +73,7 @@ public class MerchantControllerTest {
                 .guid("merchant")
                 .name("Первый мерчант")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(merchantService.add(any())).thenReturn(responseDto);
@@ -86,7 +86,7 @@ public class MerchantControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("merchant")))
                 .andExpect(jsonPath("name", is("Первый мерчант")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")))
                 .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
     }
 
@@ -97,7 +97,7 @@ public class MerchantControllerTest {
                 .isActive(true)
                 .guid("merchant")
                 .name("Первый мерчант")
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         MerchantDto responseDto = MerchantDto.builder()
@@ -106,7 +106,7 @@ public class MerchantControllerTest {
                 .guid("merchant")
                 .name("Первый мерчант")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(merchantService.update(any(), eq(1L))).thenReturn(responseDto);
@@ -119,7 +119,7 @@ public class MerchantControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("merchant")))
                 .andExpect(jsonPath("name", is("Первый мерчант")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")))
                 .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
     }
 

@@ -19,12 +19,12 @@ public class UserDto {
     private Long id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @NotBlank(message = "required.value.error")
+    @NotBlank(message = "required.password.error")
     @Size(max = 64, message = "long.password.error")
     private String password;
 
-    @Email(message = "required.value.error")
-    @NotBlank(message = "required.value.error")
+    @Email(message = "incorrect.login.error")
+    @NotBlank(message = "required.login.error")
     @Size(max = 64, message = "long.login.error")
     private String login;
 
