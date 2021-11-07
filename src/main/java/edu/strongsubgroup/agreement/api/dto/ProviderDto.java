@@ -28,9 +28,9 @@ public class ProviderDto {
     @Size(max = 64, message = "long.name.error")
     private String name;
 
-    @Pattern(regexp = "[+][0-9][(][0-9]{3}[)] [0-9]{3} [0-9]{4}$", message = "incorrect.phone.number.error")
+    @Pattern(regexp = "[+][1-9]([0-9]{0,2})[(][0-9]{3}[)] [0-9]{3} [0-9]{4}$", message = "incorrect.phone.number.error")
     @NotBlank(message = "required.phone.number.error")
-    @Size(max = 16, message = "long.phone.number.error")
+    @Size(max = 18, message = "long.phone.number.error")
     private String phoneNumber;
 
     private boolean isActive;
