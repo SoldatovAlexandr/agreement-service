@@ -43,7 +43,7 @@ public class ProviderControllerTest {
                 .guid("provider")
                 .name("Первый провайдер")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(providerService.find(1L)).thenReturn(dto);
@@ -54,7 +54,7 @@ public class ProviderControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("provider")))
                 .andExpect(jsonPath("name", is("Первый провайдер")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")));
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ProviderControllerTest {
                 .isActive(true)
                 .guid("provider")
                 .name("Первый провайдер")
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         ProviderDto responseDto = ProviderDto.builder()
@@ -72,7 +72,7 @@ public class ProviderControllerTest {
                 .guid("provider")
                 .name("Первый провайдер")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(providerService.add(any())).thenReturn(responseDto);
@@ -85,7 +85,7 @@ public class ProviderControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("provider")))
                 .andExpect(jsonPath("name", is("Первый провайдер")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")))
                 .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
     }
 
@@ -96,7 +96,7 @@ public class ProviderControllerTest {
                 .isActive(true)
                 .guid("provider")
                 .name("Первый провайдер")
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         ProviderDto responseDto = ProviderDto.builder()
@@ -105,7 +105,7 @@ public class ProviderControllerTest {
                 .guid("provider")
                 .name("Первый провайдер")
                 .createdAt(createdAt)
-                .phoneNumber("9008888888")
+                .phoneNumber("+7(999) 999 9999")
                 .build();
 
         when(providerService.update(any(), eq(1L))).thenReturn(responseDto);
@@ -118,7 +118,7 @@ public class ProviderControllerTest {
                 .andExpect(jsonPath("active", is(true)))
                 .andExpect(jsonPath("guid", is("provider")))
                 .andExpect(jsonPath("name", is("Первый провайдер")))
-                .andExpect(jsonPath("phoneNumber", is("9008888888")))
+                .andExpect(jsonPath("phoneNumber", is("+7(999) 999 9999")))
                 .andExpect(jsonPath("createdAt", is("28/09/2021 11:39:00")));
     }
 
