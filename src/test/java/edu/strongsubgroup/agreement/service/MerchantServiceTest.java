@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -113,5 +114,17 @@ public class MerchantServiceTest {
 
         verify(merchantRepository).findById(1L);
         verify(merchantRepository).delete(merchant);
+    }
+
+
+    @Test
+    void changeStatus() {
+        when(merchantRepository.findById(1L)).thenReturn(Optional.of(merchant));
+
+        MerchantDto merchantDto = merchantService.changeStatus(1L);
+
+        verify(merchantRepository).findById(1L);
+        verify(merchantRepository).save(merchant);
+        assertFalse(merchantDto.isActive());
     }
 }

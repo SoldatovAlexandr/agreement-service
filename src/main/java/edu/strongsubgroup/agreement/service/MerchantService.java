@@ -18,4 +18,6 @@ public interface MerchantService {
     void delete(Long id);
 
     Merchant findById(Long id);
+
+    MerchantDto changeStatus(Long id);
 }

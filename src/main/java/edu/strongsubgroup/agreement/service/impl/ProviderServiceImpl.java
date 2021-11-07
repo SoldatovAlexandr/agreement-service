@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class ProviderServiceImpl implements ProviderService {
         return providerMapper.to(provider);
     }
 
+    @Transactional
     @Override
     public ProviderDto update(ProviderDto merchantDto, Long id) {
         Provider provider = findById(id);
@@ -54,6 +56,7 @@ public class ProviderServiceImpl implements ProviderService {
         return providerMapper.to(provider);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         Provider provider = findById(id);
@@ -64,5 +67,14 @@ public class ProviderServiceImpl implements ProviderService {
     public Provider findById(Long id) {
         return providerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Provider with id [%s] not found", id)));
+    }
+
+    @Transactional
+    @Override
+    public ProviderDto changeStatus(Long id) {
+        Provider provider = findById(id);
+        provider.setActive(!provider.isActive());
+        providerRepository.save(provider);
+        return providerMapper.to(provider);
     }
 }
