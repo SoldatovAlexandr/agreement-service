@@ -2,6 +2,7 @@ package edu.strongsubgroup.agreement.service;
 
 import edu.strongsubgroup.agreement.api.dto.ProviderDto;
 import edu.strongsubgroup.agreement.api.mapper.ProviderMapper;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
 import edu.strongsubgroup.agreement.model.Provider;
 import edu.strongsubgroup.agreement.repository.ProviderRepository;
@@ -72,7 +73,7 @@ public class ProviderServiceTest {
     }
 
     @Test
-    void add_success() {
+    void add_success() throws DuplicateException {
         when(providerRepository.save(provider)).thenReturn(provider);
 
         ProviderDto resultDto = providerService.add(providerDto);

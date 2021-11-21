@@ -2,6 +2,7 @@ package edu.strongsubgroup.agreement.service;
 
 import edu.strongsubgroup.agreement.api.dto.MerchantDto;
 import edu.strongsubgroup.agreement.api.mapper.MerchantMapper;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
 import edu.strongsubgroup.agreement.model.Merchant;
 import edu.strongsubgroup.agreement.repository.MerchantRepository;
@@ -73,7 +74,7 @@ public class MerchantServiceTest {
     }
 
     @Test
-    void add_success() {
+    void add_success() throws DuplicateException {
         when(merchantRepository.save(merchant)).thenReturn(merchant);
 
         MerchantDto resultDto = merchantService.add(merchantDto);

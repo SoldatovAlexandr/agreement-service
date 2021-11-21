@@ -1,5 +1,6 @@
 package edu.strongsubgroup.agreement.api.exception;
 
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(NotFoundException.class)
     public final ResponseEntity<ApiError> handleNotFoundException(final NotFoundException ex) {
         return getResponseEntity(HttpStatus.NOT_FOUND, "exception.not.found", ex);
+    }
+
+    @ExceptionHandler(DuplicateException.class)
+    public final ResponseEntity<ApiError> handleDuplicateException(final DuplicateException ex) {
+        return getResponseEntity(HttpStatus.BAD_REQUEST, "exception.duplicate", ex);
     }
 
     @Override

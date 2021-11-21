@@ -1,6 +1,7 @@
 package edu.strongsubgroup.agreement.service;
 
 import edu.strongsubgroup.agreement.api.dto.ProviderDto;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.model.Provider;
 import edu.strongsubgroup.agreement.repository.specification.ProviderSpecification;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ public interface ProviderService {
 
     Page<ProviderDto> findAllBySpecification(ProviderSpecification specification, Pageable pageable);
 
-    ProviderDto add(ProviderDto merchantDto);
+    ProviderDto add(ProviderDto merchantDto) throws DuplicateException;
 
     ProviderDto update(ProviderDto merchantDto, Long id);
 
