@@ -2,6 +2,7 @@ package edu.strongsubgroup.agreement.service.impl;
 
 import edu.strongsubgroup.agreement.api.dto.ProviderDto;
 import edu.strongsubgroup.agreement.api.mapper.ProviderMapper;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
 import edu.strongsubgroup.agreement.model.Provider;
 import edu.strongsubgroup.agreement.repository.ProviderRepository;
@@ -37,9 +38,12 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderDto add(ProviderDto merchantDto) {
+    public ProviderDto add(ProviderDto merchantDto) throws DuplicateException {
         Provider provider = providerMapper.to(merchantDto);
         provider.setCreatedAt(dateTimeUtils.now());
+        if (providerRepository.findByGuid(provider.getGuid()).isPresent()) {
+            throw new DuplicateException(String.format("Provider with guid [%s] already exists.", provider.getGuid()));
+        }
         providerRepository.save(provider);
         return providerMapper.to(provider);
     }

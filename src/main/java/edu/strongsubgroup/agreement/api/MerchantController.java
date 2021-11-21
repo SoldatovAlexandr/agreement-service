@@ -1,6 +1,7 @@
 package edu.strongsubgroup.agreement.api;
 
 import edu.strongsubgroup.agreement.api.dto.MerchantDto;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.repository.specification.MerchantSpecification;
 import edu.strongsubgroup.agreement.service.MerchantService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class MerchantController {
     }
 
     @PostMapping("/")
-    public MerchantDto add(final @Valid @RequestBody MerchantDto merchantDto) {
+    public MerchantDto add(final @Valid @RequestBody MerchantDto merchantDto) throws DuplicateException {
         log.info("Add merchant [{}]", merchantDto);
         return merchantService.add(merchantDto);
     }

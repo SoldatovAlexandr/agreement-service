@@ -2,6 +2,7 @@ package edu.strongsubgroup.agreement.service.impl;
 
 import edu.strongsubgroup.agreement.api.dto.MerchantDto;
 import edu.strongsubgroup.agreement.api.mapper.MerchantMapper;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.exception.NotFoundException;
 import edu.strongsubgroup.agreement.model.Merchant;
 import edu.strongsubgroup.agreement.repository.MerchantRepository;
@@ -37,9 +38,12 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public MerchantDto add(MerchantDto merchantDto) {
+    public MerchantDto add(MerchantDto merchantDto) throws DuplicateException {
         Merchant merchant = merchantMapper.to(merchantDto);
         merchant.setCreatedAt(dateTimeUtils.now());
+        if (merchantRepository.findByGuid(merchant.getGuid()).isPresent()) {
+            throw new DuplicateException(String.format("Merchant with guid [%s] already exists.", merchant.getGuid()));
+        }
         merchantRepository.save(merchant);
         return merchantMapper.to(merchant);
     }

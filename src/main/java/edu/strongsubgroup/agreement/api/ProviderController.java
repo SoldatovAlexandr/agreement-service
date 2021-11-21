@@ -1,6 +1,7 @@
 package edu.strongsubgroup.agreement.api;
 
 import edu.strongsubgroup.agreement.api.dto.ProviderDto;
+import edu.strongsubgroup.agreement.exception.DuplicateException;
 import edu.strongsubgroup.agreement.repository.specification.ProviderSpecification;
 import edu.strongsubgroup.agreement.service.ProviderService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class ProviderController {
     }
 
     @PostMapping("/")
-    public ProviderDto add(final @Valid @RequestBody ProviderDto providerDto) {
+    public ProviderDto add(final @Valid @RequestBody ProviderDto providerDto) throws DuplicateException {
         log.info("Add provider [{}]", providerDto);
         return providerService.add(providerDto);
     }
