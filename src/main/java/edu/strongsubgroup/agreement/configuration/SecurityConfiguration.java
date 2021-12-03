@@ -29,11 +29,13 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final String LOGIN_URL = "/api/login";
+
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
 
-    @Value("frontend.host")
+    @Value("${frontend.host}")
     private String frontendUrl;
 
     @Override
@@ -47,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 new CustomAuthenticationFilter(authenticationManagerBean(), objectMapper);
         http.cors();
         http.csrf().disable();
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+        customAuthenticationFilter.setFilterProcessesUrl(LOGIN_URL);
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers("/api/login").permitAll();
+        http.authorizeRequests().antMatchers(LOGIN_URL).permitAll();
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), CustomAuthenticationFilter.class);
